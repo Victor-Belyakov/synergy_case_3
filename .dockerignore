@@ -1,0 +1,16 @@
+vendor/
+node_modules/
+runtime/
+web/assets/
+.git/
+.gitignore
+*.log
+*.db
+*.sqlite
+.DS_Store
+Thumbs.db
+docker-compose.yml
+Dockerfile
+docker/
+
+
