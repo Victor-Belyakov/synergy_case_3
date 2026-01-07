@@ -22,14 +22,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             <a href="<?= Url::to(['post/index']) ?>" class="list-group-item list-group-item-action <?= !$selectedTag ? 'active' : '' ?>">
                                 Все посты
                             </a>
-                            <?php foreach ($tags as $tag): ?>
-                                <a href="<?= Url::to(['post/index', 'tag' => $tag->name]) ?>" 
-                                   class="list-group-item list-group-item-action <?= $selectedTag == $tag->name ? 'active' : '' ?>">
-                                    <?= Html::encode($tag->name) ?>
-                                    <span class="badge badge-primary badge-pill float-right">
-                                        <?= count($tag->posts) ?>
-                                    </span>
-                                </a>
+                            <?php foreach ($tagsWithCount as $tagData): ?>
+                                <?php if ($tagData['count'] > 0): ?>
+                                    <a href="<?= Url::to(['post/index', 'tag' => $tagData['tag']->name]) ?>" 
+                                       class="list-group-item list-group-item-action <?= $selectedTag == $tagData['tag']->name ? 'active' : '' ?>">
+                                        <?= Html::encode($tagData['tag']->name) ?>
+                                        <span class="badge badge-primary badge-pill float-right">
+                                            <?= $tagData['count'] ?>
+                                        </span>
+                                    </a>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </div>
                     <?php else: ?>

@@ -74,9 +74,25 @@ class PostController extends Controller
 
         $tags = Tag::find()->orderBy(['name' => SORT_ASC])->all();
 
+        $tagsWithCount = [];
+        foreach ($tags as $tagItem) {
+            $tagPosts = $tagItem->posts;
+            $accessibleCount = 0;
+            foreach ($tagPosts as $tagPost) {
+                if ($tagPost->canView($userId)) {
+                    $accessibleCount++;
+                }
+            }
+            $tagsWithCount[] = [
+                'tag' => $tagItem,
+                'count' => $accessibleCount
+            ];
+        }
+
         return $this->render('index', [
             'posts' => $filteredPosts,
             'tags' => $tags,
+            'tagsWithCount' => $tagsWithCount,
             'selectedTag' => $tag,
         ]);
     }
